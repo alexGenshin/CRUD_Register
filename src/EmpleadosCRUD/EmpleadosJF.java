@@ -37,7 +37,8 @@ public class EmpleadosJF extends javax.swing.JFrame {
     Empleado per = new Empleado();
     SQLEmpleados modSql = new SQLEmpleados();
     Conexion cn = new Conexion();
-      double SueldoNeto;
+    double SueldoNeto;
+
     public void limpiarCajas() {
         txtcod.setText(null);
         txtNombre.setText(null);
@@ -92,7 +93,7 @@ public class EmpleadosJF extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(getBackground());
         modelo = new DefaultComboBoxModel();
-        cargarComboBox(); 
+        cargarComboBox();
         mostrarDatos();
     }
 
@@ -109,23 +110,24 @@ public class EmpleadosJF extends javax.swing.JFrame {
                 modelo.addElement(res.getString("Tipo"));
             }
             txtDepa.setModel(modelo);
-            
+
         } catch (Exception e) {
             System.out.println("ERROR: failed to load HSQLDB JDBC driver.");
             e.printStackTrace();
         }
     }
-public void insertar() throws Exception{
+
+    public void insertar() throws Exception {
         per.setIdEmpleado(Integer.parseInt(txtcod.getText()));
-         per.setNombre(txtNombre.getText());
+        per.setNombre(txtNombre.getText());
         per.setDireccion(txtDireccion.getText());
         per.setEdad(Integer.parseInt(txtEdad.getText()));
         per.setDni(txtDni.getText());
-         per.setCiudad(txtCiudad.getText());
-         Sueldo_();
-         per.setSueldoNeto(SueldoNeto);
-         
-          if (this.txtActivo.isSelected()) {
+        per.setCiudad(txtCiudad.getText());
+        Sueldo_();
+        per.setSueldoNeto(SueldoNeto);
+
+        if (this.txtActivo.isSelected()) {
             per.setEstado("Activo");
         } else {
             per.setEstado("Inactivo");
@@ -133,11 +135,11 @@ public void insertar() throws Exception{
         per.setTelefono(txtTelefono.getText());
         per.setDepa(this.txtDepa.getSelectedItem().toString());
 
-
         modSql.actualizarEmpleado(per);
         JOptionPane.showMessageDialog(null, "Datos insertados");
-       
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -284,6 +286,12 @@ public void insertar() throws Exception{
         });
 
         jLabel2.setText("    ID");
+
+        txtcod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcodActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -448,10 +456,10 @@ public void insertar() throws Exception{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void Sueldo_(){
+public void Sueldo_() {
         Double SBase = Double.parseDouble(txtSueldoBase.getText());
         Double horas = Double.parseDouble(txtHoras.getText());
-         double sueldoBon;
+        double sueldoBon;
         sueldoBon = SBase + (horas * 12);
         double desc;
         if (sueldoBon >= 0 & sueldoBon <= 1200) {
@@ -461,12 +469,12 @@ public void Sueldo_(){
         } else {
             desc = sueldoBon * 0.07;
         }
-      
+
         SueldoNeto = sueldoBon - desc;
         txtSueldoBoni.setText(String.valueOf(sueldoBon));
         txtDesc.setText(String.valueOf(desc));
         txtSueldoNeto.setText(String.valueOf(SueldoNeto));
-}
+    }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
@@ -512,13 +520,13 @@ public void Sueldo_(){
 
     private void TablaEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaEmpleadosMouseClicked
         int filaSelect = TablaEmpleados.rowAtPoint(evt.getPoint());
-        this.txtcod.setText(String.valueOf(this.TablaEmpleados.getValueAt(filaSelect,0)));
+        this.txtcod.setText(String.valueOf(this.TablaEmpleados.getValueAt(filaSelect, 0)));
         txtNombre.setText(TablaEmpleados.getValueAt(filaSelect, 1).toString());
         txtDireccion.setText(TablaEmpleados.getValueAt(filaSelect, 2).toString());
         txtEdad.setText(TablaEmpleados.getValueAt(filaSelect, 3).toString());
         txtDni.setText(TablaEmpleados.getValueAt(filaSelect, 4).toString());
         txtCiudad.setText(TablaEmpleados.getValueAt(filaSelect, 5).toString());
-   
+
         txtSueldoBase.setText("");
         txtSueldoBoni.setText("");
         txtDesc.setText("");
@@ -553,13 +561,17 @@ public void Sueldo_(){
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-       try {
+        try {
             insertar();
             mostrarDatos();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void txtcodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodActionPerformed
 
     public void insertarDatos() {
         try {

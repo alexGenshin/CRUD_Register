@@ -436,6 +436,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtcod">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtcodActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
