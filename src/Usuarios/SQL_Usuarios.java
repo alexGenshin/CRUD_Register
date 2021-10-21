@@ -28,7 +28,7 @@ public class SQL_Usuarios extends Conexion {
             return false;
         }
     }
-
+   
     public boolean Login(Usuarios us) {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -37,10 +37,8 @@ public class SQL_Usuarios extends Conexion {
 
         try {
             ps = con.prepareStatement(sql);
-            //       ?    
             ps.setString(1, us.getUsuario());
-            JOptionPane.showMessageDialog(null, us.getUsuario());
-            //Select == executeQuery    
+            JOptionPane.showMessageDialog(null, us.getUsuario()); 
             rs = ps.executeQuery();
 //si trae un valor esta consulta
             if (rs.next()) {

@@ -14,6 +14,13 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+import net.sf.jasperreports.view.JasperViewer;
 
 public class EmpleadosJF extends javax.swing.JFrame {
 
@@ -180,6 +187,7 @@ public class EmpleadosJF extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtcod = new javax.swing.JTextField();
+        Reportetxt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -293,6 +301,13 @@ public class EmpleadosJF extends javax.swing.JFrame {
             }
         });
 
+        Reportetxt.setText("Generar Reporte");
+        Reportetxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportetxtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -302,19 +317,9 @@ public class EmpleadosJF extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(btnGuardar)
-                .addGap(41, 41, 41)
-                .addComponent(jButton1)
-                .addGap(47, 47, 47)
-                .addComponent(btnEliminar)
-                .addGap(28, 28, 28)
-                .addComponent(btnModificar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtcod, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,7 +378,19 @@ public class EmpleadosJF extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel12))
                             .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39))))
+                        .addGap(39, 39, 39))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnGuardar)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton1)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnEliminar)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Reportetxt)
+                        .addGap(397, 397, 397))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,7 +465,8 @@ public class EmpleadosJF extends javax.swing.JFrame {
                     .addComponent(btnGuardar)
                     .addComponent(jButton1)
                     .addComponent(btnEliminar)
-                    .addComponent(btnModificar))
+                    .addComponent(btnModificar)
+                    .addComponent(Reportetxt))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
@@ -573,6 +591,24 @@ public void Sueldo_() {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodActionPerformed
 
+    private void ReportetxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportetxtActionPerformed
+      try {
+        Conexion con = new Conexion();
+      Connection conn=con.getConexion();
+       JasperReport reporte=null;
+       String path="src\\CRUD_Tienda\\Reporte1.jasper";
+            reporte=(JasperReport)JRLoader.loadObjectFromFile(path);
+              JasperPrint jprint=JasperFillManager.fillReport(reporte,null,conn);
+              JasperViewer view =new JasperViewer(jprint,false);
+              view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+              view.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(EmpleadosJF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+       
+    }//GEN-LAST:event_ReportetxtActionPerformed
+
     public void insertarDatos() {
         try {
 
@@ -622,6 +658,7 @@ public void Sueldo_() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Reportetxt;
     private javax.swing.JTable TablaEmpleados;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
